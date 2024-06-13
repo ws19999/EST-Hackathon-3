@@ -1,11 +1,15 @@
 import streamlit as st
+import mysql.connector
+import hashlib
 
-# 더미 사용자 데이터
-dummy_users = {
-    "user1": "password1",
-    "user2": "password2",
-    "user3": "password3"
-}
+# MySQL 데이터베이스 연결 설정
+def get_db_connection():
+    return mysql.connector.connect(
+        host="localhost",
+            user="user",
+            password="password",
+            database="admins"
+    )
 
 # 로그인 기능
 def login():
@@ -17,15 +21,25 @@ def login():
 
     # 로그인 버튼 클릭 여부 확인
     if st.button("Login"):
-        if username in dummy_users:
-            if password == dummy_users[username]:
-                st.success(f"Welcome back, {username}!")
-            else:
-                st.error("Incorrect password. Please try again.")
-        else:
-            st.error("User not found. Please try again.")
+        # 비밀번호 해시화
+        hashed_password = hashlib.sha256(password.encode()).hexdigest()
 
-    st.page_link("pages/join.py", label = "회원가입" )
+        connection = get_db_connection()
+        cursor = connection.cursor(dictionary=True)
+
+        # SQL 쿼리 실행
+        cursor.execute("SELECT * FROM users WHERE username = %s AND password = %s", (username, hashed_password))
+        user = cursor.fetchone()
+
+        if user:
+            st.success(f"Welcome back, {username}!")
+        else:
+            st.error("Incorrect username or password. Please try again.")
+
+        cursor.close()
+        connection.close()
+
+    st.page_link("pages/join.py", label="회원가입")
 
 # 로그인 함수 호출
 login()

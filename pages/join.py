@@ -10,7 +10,7 @@ def get_db_connection():
             host="localhost",
             user="user",
             password="password",
-            database="admins"  # 여기서 데이터베이스 이름을 'admins'로 변경합니다.
+            database="admins" 
         )
         if conn.is_connected():
             return conn

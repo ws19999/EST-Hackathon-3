@@ -20,5 +20,5 @@ mysql -u root --password=rootpassword mydatabase < /tmp/mydatabase_backup.sql
 exit
 
 # sql 접속
-docker exec -it mysql mysql -u root -prootpassword 로 sql 접속 가능
+prootpassworddocker exec -it mysql mysql -u root - 로 sql 접속 가능
 
