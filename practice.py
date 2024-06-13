@@ -2,11 +2,8 @@ from openai import OpenAI
 import streamlit as st
 from st_chat_message import message
 
-# 발급받은 API 키 설정
-OPENAI_API_KEY = ""
-
 # openai API 키 인증
-openai_api_key = OPENAI_API_KEY
+openai_api_key = st.secrets["OPENAI_API_KEY"]
 
 #with st.sidebar:
     #openai_api_key = st.text_input("OpenAI API Key", key="chatbot_api_key", type="password")
@@ -33,7 +30,7 @@ if prompt := st.chat_input():
     message(prompt, is_user=True)
     
     response = client.chat.completions.create(
-        model="gpt-3.5-turbo", 
+        model="gpt-4", 
         messages=st.session_state.messages
     )
     
