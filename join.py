@@ -4,9 +4,9 @@ import mysql.connector
 # MySQL 데이터베이스 연결 설정 => 우수수수어어엉님 사용자 host,user, password, adtabase로 바꿔줘야 합니다. 그리고 users 테이블 생성!!!
 mydb = mysql.connector.connect(
   host="localhost",
-  user="yourusername",
-  password="yourpassword",
-  database="mydatabase"
+  user="example_user",
+  password="example_user_password",
+  database="example_db"
 )
 
 # 더미 사용자 데이터베이스
