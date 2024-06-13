@@ -30,7 +30,7 @@ if prompt := st.chat_input():
     message(prompt, is_user=True)
     
     response = client.chat.completions.create(
-        model="gpt-4", 
+        model="gpt-4o", 
         messages=st.session_state.messages
     )
     
