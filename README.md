@@ -3,6 +3,7 @@
 # 커밋 안하시면 개인한테만 보여요!!
 
 # mysql 사용법
+
 docker-compose up -d 누르고 docker ps 눌러서 container id 를 확인하고 docker exec -it <container_id> mysql -u example_user -p<example_user_password> 에 이용하기
 mysql 종료할땐 exit
 
@@ -18,4 +19,6 @@ docker exec -it mysql bash
 mysql -u root --password=rootpassword mydatabase < /tmp/mydatabase_backup.sql
 exit
 
+# sql 접속
+docker exec -it mysql mysql -u root -prootpassword 로 sql 접속 가능
 
