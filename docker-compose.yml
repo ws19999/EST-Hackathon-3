@@ -14,15 +14,18 @@ services:
       - "3306:3306"
     volumes:
       - mysql-data:/var/lib/mysql
-volumes:
-  mysql-data:
 
-app:
-    image: your-app-image
-    environment:
-      DB_HOST: mysql
-      DB_USER: user
-      DB_PASSWORD: password
-      DB_NAME: mydatabase
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
     depends_on:
       - mysql
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      MYSQL_DATABASE: mydatabase
+
+volumes:
+  mysql-data:
