@@ -71,6 +71,7 @@ def signup():
         
         cursor.close()
         conn.close()
+    st.page_link("pages/login.py", label="로그인 화면으로 이동")
 
 # 사용자 테이블 생성 함수
 def create_users_table():
