@@ -8,9 +8,18 @@ page_map = {
     "Page 1": "gptpractice.py",
     "Page 2": "gpt예시.py"
 }
+def hide_sidebar():
+    st.markdown("""
+    <style>
+        section[data-testid="stSidebar"][aria-expanded="true"]{
+            display: none;
+        }
+    </style>
+    """, unsafe_allow_html=True)
 
 # Main function to display buttons and navigate to pages
 def main():
+    hide_sidebar() 
     st.title("Welcome to the Multi-page App")
 
     # Button to navigate to Page 1
