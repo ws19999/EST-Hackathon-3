@@ -19,4 +19,4 @@ exit
 
 # 테스트 id 비번
 test - test12
-test1 - test1234
+test1 - test12
