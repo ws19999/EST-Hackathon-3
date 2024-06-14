@@ -2,7 +2,15 @@ import streamlit as st
 import mysql.connector
 from mysql.connector import Error
 import hashlib
-
+def hide_sidebar():
+    st.markdown("""
+    <style>
+        section[data-testid="stSidebar"][aria-expanded="true"]{
+            display: none;
+        }
+    </style>
+    """, unsafe_allow_html=True)
+hide_sidebar()
 # MySQL 데이터베이스 연결 설정
 def get_db_connection():
     try:
