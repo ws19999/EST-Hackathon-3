@@ -22,7 +22,7 @@ def get_db_connection():
 
 # 로그인 기능
 def login():
-    st.title("아자아자 화이팅!!!")
+    st.title("마음들이 로그인")
 
     # 사용자 입력 받기
     username = st.text_input("Username")
@@ -49,7 +49,8 @@ def login():
 
         cursor.close()
         connection.close()
-    st.page_link("pages/join.py", label="회원가입")
+    if st.button("Registration"):
+        st.switch_page("pages/join.py")
 
 # 로그인 함수 호출
 login()

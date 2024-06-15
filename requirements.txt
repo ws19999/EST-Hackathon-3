@@ -2,4 +2,3 @@ streamlit
 mysql.connector
 openai.OpenAI
 st_chat_message
-mysql.connector

@@ -32,15 +32,16 @@ def hash_password(password):
 
 # 회원가입 기능
 def signup():
-    st.title("Sign Up")
+    st.title("마음들이 회원가입")
 
     # 사용자 입력 받기
     new_username = st.text_input("New Username")
     new_password = st.text_input("New Password", type="password")
     confirm_password = st.text_input("Confirm Password", type="password")
 
+    
     # 회원가입 버튼 클릭 여부 확인
-    if st.button("Sign Up"):
+    if st.button("회원가입"):
         if not new_username or not new_password or not confirm_password:
             st.error("All fields are required.")
             return
@@ -83,7 +84,8 @@ def signup():
         
         cursor.close()
         conn.close()
-    st.page_link("pages/login.py", label="로그인 화면으로 이동")
+    if st.button("로그인"):
+        st.switch_page("pages/login.py")
 
 # 사용자 테이블 생성 함수
 def create_users_table():
