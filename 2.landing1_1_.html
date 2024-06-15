@@ -12,6 +12,20 @@
     <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
 
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      $(document).ready(function(){
+        $('#start-button').click(function(){
+          var url = new URL(window.location);
+          url.searchParams.set('page', 'next_page');
+          console.log('Updated URL:', url.href);
+          window.location.href = url.href;
+          window.parent.postMessage("login", "*");
+
+          
+        });
+      });
+    </script>
   </head>
   <body>
     <div class="relative flex size-full min-h-screen flex-col bg-slate-50 group/design-root overflow-x-hidden" style='font-family: Manrope, "Noto Sans", sans-serif;'>
@@ -94,6 +108,7 @@
                     </h2>
                   </div>
                   <button
+                    id="start-button"
                     class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-4 @[480px]:h-12 @[480px]:px-5 bg-[#1980e6] text-slate-50 text-sm font-bold leading-normal tracking-[0.015em] @[480px]:text-base @[480px]:font-bold @[480px]:leading-normal @[480px]:tracking-[0.015em]"
                   >
                     <span class="truncate">시작하기</span>

@@ -3,8 +3,11 @@ import streamlit as st
 from st_chat_message import message
 from forms_question import questions, IC, calculate_score, interpret_scores
 
+# openai API 키 인증
+openai_api_key = st.secrets["OPENAI_API_KEY"]
 # OpenAI GPT-4o 모델 설정
 client = OpenAI(api_key=openai_api_key)
+
 
 # Streamlit 앱 생성
 def main():
