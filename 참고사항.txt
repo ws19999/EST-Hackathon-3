@@ -19,3 +19,5 @@ exit
 
 # 테스트 id 비번
 test - test1234
+
+DELETE FROM test;
