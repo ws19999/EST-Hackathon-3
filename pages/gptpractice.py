@@ -39,6 +39,12 @@ def load_chat_history():
     table_name = username  # 사용자 이름을 테이블 이름으로 사용
     cursor.execute(f"SELECT user_message, bot_response, timestamp FROM {table_name} ORDER BY timestamp ASC")
     rows = cursor.fetchall()
+    # 채팅 기록의 합이 50개가 넘는지 확인하고 넘으면 오래된 데이터 삭제
+    while len(rows) > 50:
+        cursor.execute(f"DELETE FROM {table_name} WHERE timestamp = (SELECT MIN(timestamp) FROM {table_name})")
+        conn.commit()
+        cursor.execute(f"SELECT user_message, bot_response, timestamp FROM {table_name} ORDER BY timestamp ASC")
+        rows = cursor.fetchall()
     conn.close()
     return [{"role": "user", "content": user_message} if bot_response=='' else {"role": "assistant", "content": bot_response} for i, (user_message, bot_response, _) in enumerate(rows)]
 
@@ -57,6 +63,15 @@ for msg in st.session_state.messages:
     if msg["role"]!="system":
         message(msg["content"], is_user=msg["role"] == "user")
 
+def extract_keywords(prompt):
+    response = client.chat.completions.create(
+        engine="text-davinci-003",
+        prompt=f"Extract important keywords from the following prompt:\n\n{prompt}\n\nKeywords:",
+        max_tokens=10
+    )
+    keywords = response.choices[0].text.strip()
+    return keywords
+
 if prompt := st.chat_input():
     if not openai_api_key:
         st.info("Please add your OpenAI API key to continue.")
@@ -64,16 +79,16 @@ if prompt := st.chat_input():
 
     client = OpenAI(api_key=openai_api_key)
     st.session_state.messages.append({"role": "user", "content": prompt})
-    save_chat(prompt, "", "")  # 빈 bot_response와 words로 저장
+    # 중요한 단어 추출
+    important_words = extract_keywords(prompt)
+    save_chat(prompt, "", important_words)  # 빈 bot_response와 words로 저장
     message(prompt, is_user=True)
     
     response = client.chat.completions.create(
         model="ft:gpt-3.5-turbo-1106:personal:ourchatbot:9a5TUFUx", 
         messages=st.session_state.messages
     )
-    
     msg = response.choices[0].message.content
-    words = " ".join(msg.split())  # 예시로 단어를 결합하여 words 필드를 채움
     st.session_state.messages.append({"role": "assistant", "content": msg})
-    save_chat('', msg, words)
+    save_chat('', msg,'')
     message(msg, is_user=False)
