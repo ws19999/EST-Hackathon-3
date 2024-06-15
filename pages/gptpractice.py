@@ -72,16 +72,17 @@ st.title("마음들이")
 
 if "messages" not in st.session_state:
     st.session_state["messages"] = load_chat_history()
-    st.session_state.messages.append({"role": "system", "content": "You are a friendly and polite assistant. Always respond in a kind and helpful manner. Encourage the user to explore self-discovery and learn about themselves. Ask engaging questions that prompt self-reflection and personal insights."})
     if st.session_state['messages']==[]:
         st.session_state["messages"].append({"role": "assistant", "content": "안녕? 만나서 반가워 "})
+    #st.session_state.messages.append({"role": "system", "content": "You are a friendly and polite assistant. Always respond in a kind and helpful manner. Encourage the user to explore self-discovery and learn about themselves. Ask engaging questions that prompt self-reflection and personal insights."})
+    st.session_state.messages.append({"role": "system", "content": "You are a friendly and polite assistant. Always respond in a kind and helpful manner. Ask questions that help to understand the user's personality traits, such as those used in MBTI or Big Five personality assessments."})
 for msg in st.session_state.messages:
     if msg["role"]!="system":
         message(msg["content"], is_user=msg["role"] == "user")
 
 def extract_keywords(prompt):
     response = client.chat.completions.create(
-        engine="text-davinci-003",
+        model="text-davinci-003",
         prompt=f"Extract important keywords from the following prompt:\n\n{prompt}\n\nKeywords:",
         max_tokens=10
     )

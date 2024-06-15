@@ -1,4 +1,5 @@
 streamlit
 mysql.connector
-openai
+openai.OpenAI
 st_chat_message
+mysql.connector
