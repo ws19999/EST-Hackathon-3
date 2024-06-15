@@ -39,12 +39,28 @@ def load_chat_history():
     table_name = username  # 사용자 이름을 테이블 이름으로 사용
     cursor.execute(f"SELECT user_message, bot_response, timestamp FROM {table_name} ORDER BY timestamp ASC")
     rows = cursor.fetchall()
-    # 채팅 기록의 합이 50개가 넘는지 확인하고 넘으면 오래된 데이터 삭제
-    while len(rows) > 50:
-        cursor.execute(f"DELETE FROM {table_name} WHERE timestamp = (SELECT MIN(timestamp) FROM {table_name})")
-        conn.commit()
+    
+    if len(rows) > 50:
+        # 오래된 데이터의 timestamp 가져오기
+        cursor.execute(f"""
+            SELECT timestamp FROM (
+                SELECT timestamp FROM {table_name}
+                ORDER BY timestamp ASC
+                LIMIT 50 OFFSET 50
+            ) AS subquery
+        """)
+        timestamps_to_delete = cursor.fetchall()
+
+        # 오래된 데이터 삭제
+        for (timestamp,) in timestamps_to_delete:
+            cursor.execute(f"DELETE FROM {table_name} WHERE timestamp = %s", (timestamp,))
+            conn.commit()
+
+        # 삭제 후 남은 데이터 다시 가져오기
         cursor.execute(f"SELECT user_message, bot_response, timestamp FROM {table_name} ORDER BY timestamp ASC")
         rows = cursor.fetchall()
+
+
     conn.close()
     return [{"role": "user", "content": user_message} if bot_response=='' else {"role": "assistant", "content": bot_response} for i, (user_message, bot_response, _) in enumerate(rows)]
 
