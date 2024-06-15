@@ -82,11 +82,14 @@ for msg in st.session_state.messages:
 
 def extract_keywords(prompt):
     response = client.chat.completions.create(
-        model="text-davinci-003",
-        prompt=f"Extract important keywords from the following prompt:\n\n{prompt}\n\nKeywords:",
+        model="gpt-4",
+        messages=[
+            {"role": "system", "content": "You are a helpful assistant."},
+            {"role": "user", "content": f"Extract important keywords from the following prompt:\n\n{prompt}\n\nKeywords:"}
+        ],
         max_tokens=10
     )
-    keywords = response.choices[0].text.strip()
+    keywords = response.choices[0].message.content.strip()
     return keywords
 
 if prompt := st.chat_input():
