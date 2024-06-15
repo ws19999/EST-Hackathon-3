@@ -50,11 +50,12 @@ st.title("마음들이")
 
 if "messages" not in st.session_state:
     st.session_state["messages"] = load_chat_history()
+    st.session_state.messages.append({"role": "system", "content": "You are a friendly and polite assistant. Always respond in a kind and helpful manner. Encourage the user to explore self-discovery and learn about themselves. Ask engaging questions that prompt self-reflection and personal insights."})
     if st.session_state['messages']==[]:
-        st.session_state.messages.append({"role": "system", "content": "You are a friendly and polite assistant. Always respond in a kind and helpful manner. Ask questions to learn about themselves"})
         st.session_state["messages"].append({"role": "assistant", "content": "안녕? 만나서 반가워 "})
 for msg in st.session_state.messages:
-    message(msg["content"], is_user=msg["role"] == "user")
+    if msg["role"]!="system":
+        message(msg["content"], is_user=msg["role"] == "user")
 
 if prompt := st.chat_input():
     if not openai_api_key:
