@@ -9,4 +9,4 @@ COPY . .
 
 # 필요한 패키지 설치
 RUN pip install --no-cache-dir -r requirements.txt
-CMD ["npm", "start"]
+#CMD ["npm", "start"]
