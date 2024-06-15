@@ -18,5 +18,5 @@ mysql -u root --password=rootpassword mydatabase < /tmp/mydatabase_backup.sql
 exit
 
 # 테스트 id 비번
-test - test12
+test - test1234
 test1 - test12

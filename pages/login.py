@@ -41,13 +41,14 @@ def login():
         user = cursor.fetchone()
 
         if user:
-            st.success(f"Welcome back, {username}!")
+            st.success(f"안녕하세요, {username}님!")
+            st.session_state['username'] = username
+            st.switch_page("pages/homeexample.py")
         else:
-            st.error("Incorrect username or password. Please try again.")
+            st.error("다시 시도해 주세요")
 
         cursor.close()
         connection.close()
-
     st.page_link("pages/join.py", label="회원가입")
 
 # 로그인 함수 호출
