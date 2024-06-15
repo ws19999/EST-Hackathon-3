@@ -5,14 +5,8 @@ from st_chat_message import message
 # openai API 키 인증
 openai_api_key = st.secrets["OPENAI_API_KEY"]
 
-#with st.sidebar:
-    #openai_api_key = st.text_input("OpenAI API Key", key="chatbot_api_key", type="password")
-    #"[Get an OpenAI API key](https://platform.openai.com/account/api-keys)"
-    #"[View the source code](https://github.com/streamlit/llm-examples/blob/main/Chatbot.py)"
-    #"[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/streamlit/llm-examples?quickstart=1)"
-
-st.title("💬 Chatbot")
-st.caption("🚀 A Streamlit chatbot powered by OpenAI")
+st.title("당신의 친구")
+#st.caption("🚀 A Streamlit chatbot powered by OpenAI")
 
 if "messages" not in st.session_state:
     st.session_state["messages"] = [{"role": "assistant", "content": "안녕? 만나서 반가워"}]

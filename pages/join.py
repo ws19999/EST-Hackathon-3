@@ -65,6 +65,18 @@ def signup():
             try:
                 cursor.execute("INSERT INTO users (username, password) VALUES (%s, %s)", (new_username, hashed_password))
                 conn.commit()
+                # 새로운 사용자의 이름을 가진 테이블을 생성
+                create_table_query = f"""
+                CREATE TABLE {new_username} (
+                    id INT AUTO_INCREMENT PRIMARY KEY,
+                    user_message TEXT NOT NULL,
+                    bot_response TEXT NOT NULL,
+                    words TEXT NOT NULL,
+                    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                );
+                """
+                cursor.execute(create_table_query)
+                conn.commit()
                 st.success("You have successfully signed up. Please proceed to login.")
             except Error as e:
                 st.error(f"Failed to sign up: {e}")
