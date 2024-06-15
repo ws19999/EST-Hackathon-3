@@ -2,7 +2,6 @@ import mysql.connector
 import streamlit as st
 from openai import OpenAI
 from st_chat_message import message
-import random
 temp=0
 def hide_sidebar():
     st.markdown("""
@@ -39,7 +38,7 @@ def load_chat_history():
     conn = get_db_connection()
     cursor = conn.cursor()
     table_name = username  # 사용자 이름을 테이블 이름으로 사용
-    cursor.execute(f"SELECT user_message, bot_response, timestamp FROM {table_name} ORDER BY timestamp ASC")
+    cursor.execute(f"SELECT user_message, bot_response, timestamp FROM {table_name} ")
     rows = cursor.fetchall()
     
     if len(rows) > 50:
