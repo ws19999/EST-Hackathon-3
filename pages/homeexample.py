@@ -16,7 +16,7 @@ username = st.session_state.get('username')
 st.title("메인 페이지")
 st.write(f"안녕하세요, {username}님!")
 
-st.page_link("pages/gptpractice2.py", label="gpt")
+st.page_link("pages/gptpractice.py", label="gpt")
 
 
 if __name__ == "__main__":
