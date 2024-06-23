@@ -1,5 +1,1 @@
-# EST-Hackathon-3
-# DB: docker 이용해서 mysql
-# 챗봇: secrets.toml에 api이용
-
-
+사회적 고립에 처해있는 청년들을 위한 챗봇 및 커뮤니티 추천 프로그램, 마음들이
